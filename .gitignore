@@ -1,0 +1,23 @@
+# Publish only this curated collection. Other local skills remain untracked.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/bdd/
+!/atdd/
+!/hvtdd/
+!/tdd/
+!/behavior-specification/
+!/high-value-testing/
+!/test-implementation/
+!/testing/
+!/codebase-design/
+!/code-review/
+!/gherkin/
+!/setup-engineering-skills/
+
+# Local artifacts are never part of a skill package.
+**/.DS_Store
+**/__pycache__/
+**/*.pyc
+**/node_modules/
