@@ -20,7 +20,7 @@ Schema-3 saved receipts contain capture UUID, destination, status and an opaque 
 After verified host release, check owner-only receipt metadata, never credential contents:
 
 ```bash
-python3 /home/tiago/.agents/skills/computer-use-wizard/templates/private-capture.py \
+python3 "$HOME/.agents/skills/computer-use-wizard/templates/private-capture.py" \
   --check-saved-receipt /absolute/owned/private/capture-receipt.json \
   --output /absolute/owned/private/new-value --handoff-id CAPTURE_32_HEX_ID \
   --process-exit-code ACTUAL_CAPTURE_EXIT_CODE

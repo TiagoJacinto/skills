@@ -30,12 +30,10 @@ For Computer Use installation, graphical-session access, screen-lock configurati
 
 ## Source evidence
 
-Machine session:
-
-`/home/tiago/.pi/agent/sessions/--home-tiago-.pi-agent--/2026-10-09T23-01-15-176Z_01a122e6-3727-7272-b00b-22a3ebfaa0a0.jsonl`
+A local session record documented these historical checks; it is not included in this package.
 
 - Lines 208–224: inspected GDM and discovered existing automatic login. Next-boot behavior was not tested. The accompanying screen-lock work is recorded under `ubuntu-desktop-computer-use`.
-- Lines 596–615: inspected Dell adapter; configured saved `magic` and live `Wake-on: g`; verified network remained connected.
-- Lines 621–627: BIOS, Raspberry Pi sender, and wake tests remained pending; user explicitly deferred further Wake-on-LAN setup.
+- Lines 596–615: inspected an Ethernet adapter; configured saved `magic` and live `Wake-on: g`; verified network remained connected.
+- Lines 621–627: BIOS, sender setup, and wake tests remained pending; the user explicitly deferred further Wake-on-LAN setup.
 
 These are historical checks, not a claim that current machine settings or end-to-end wake behavior have just been tested.
