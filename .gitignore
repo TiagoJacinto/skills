@@ -15,6 +15,9 @@
 !/code-review/
 !/gherkin/
 !/setup-engineering-skills/
+!/computer-use-wizard/
+!/ubuntu-desktop-computer-use/
+!/ubuntu-machine-configuration/
 
 # Local artifacts are never part of a skill package.
 **/.DS_Store

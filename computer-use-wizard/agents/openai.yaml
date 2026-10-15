@@ -1,0 +1,3 @@
+interface:
+  display_name: "Computer Use Wizard"
+  short_description: "Run a guided setup inside the agent session"
