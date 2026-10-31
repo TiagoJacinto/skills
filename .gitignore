@@ -18,6 +18,8 @@
 !/computer-use-wizard/
 !/ubuntu-desktop-computer-use/
 !/ubuntu-machine-configuration/
+!/goal-loop/
+!/goal-supervise/
 
 # Local artifacts are never part of a skill package.
 **/.DS_Store
