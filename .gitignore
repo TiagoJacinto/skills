@@ -20,6 +20,12 @@
 !/ubuntu-machine-configuration/
 !/goal-loop/
 !/goal-supervise/
+!/choose-orchestration/
+!/idiot-boss/
+!/retro/
+!/writing-for-agents/
+!/compile-instruction/
+!/automated-checks/
 
 # Local artifacts are never part of a skill package.
 **/.DS_Store
