@@ -190,6 +190,13 @@ make it smaller or larger?” when a sizing decision is needed.
 - **Discretion:** Which alternative approaches and trade-offs may the agent
   choose if its first approach fails? Which choices should return to the user?
 - **Limits:** Which cost, time, scope, and risk limits matter to this task?
+- **Start time:** Ask whether to start now, at off hours, or once at a set
+  time. Default to now. Off hours are the period when the machine is awake
+  and the user is not working. Take them from the user's instructions for the
+  host; ask when they are not stated. Choosing off hours sets the scheduled
+  start's `once` `runAt` to the next start of off hours (see Scheduled start).
+  A machine that suspends when off hours end stops a running goal, so say so
+  when the goal may run past that time.
 
 Preserve higher-priority safety requirements regardless of the execution
 agreement.
