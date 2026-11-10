@@ -196,7 +196,11 @@ make it smaller or larger?” when a sizing decision is needed.
   host; ask when they are not stated. Choosing off hours sets the scheduled
   start's `once` `runAt` to the next start of off hours (see Scheduled start).
   A machine that suspends when off hours end stops a running goal, so say so
-  when the goal may run past that time.
+  when the goal may run past that time. A goal that runs in off hours does not
+  compete with the user's own usage, so its Coordination rows may recommend
+  bigger models than the same work would get in working hours. First list the
+  starts already scheduled for those off hours; when several goal loops share
+  them, keep the usual models.
 
 Preserve higher-priority safety requirements regardless of the execution
 agreement.
