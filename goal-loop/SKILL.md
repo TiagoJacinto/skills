@@ -65,8 +65,8 @@ ask which harness will run the loop before finalizing the output.
    the execution harness, the coordination approach and per-concern
    assignments for the lead and the supervisor, the capability each harness
    choice meets, the `Ask first` entries the supervisor may grant, any model
-   selection command the user must run there first, human checkpoints, and
-   material limits. Request confirmation only for
+   selection command the user must run there first, human checkpoints, the
+   start time, and material limits. Request confirmation only for
    proposed choices not already approved. This step is done when those
    decisions are settled and remaining human dependencies are explicit—not
    when every possible detail is specified.
@@ -92,6 +92,9 @@ ask which harness will run the loop before finalizing the output.
    rather than clear: in Claude Code, `/clear` starts a new session ID, which a
    supervisor watching the old one loses, and a T3 thread resumes the old,
    uncleared session after its process restarts.
+
+   When the agreed start time is later, schedule the start message instead of
+   sending it; see [Scheduled start](#scheduled-start).
 
 ### Scope review
 
@@ -149,9 +152,9 @@ make it smaller or larger?” when a sizing decision is needed.
   with strong workers, and give its reason. Then show a table with one row per
   concern, grouped by coordinator: the recommended harness, model or named
   agent, and effort, each passing Capabilities. Ask the user to confirm or
-  change each row; their choices override the recommendation. Also settle what
-  may run in parallel or in an isolated worktree, and how delegated results
-  are checked and integrated.
+  change each row; their choices override the recommendation, including what
+  runs in parallel and which workers get their own worktree. Also settle how
+  delegated results are checked and integrated.
 - **Capabilities:** For each coordinator and concern, match what the work
   needs against what its harness, model, and effort together provide: tools
   and MCP servers, network reach, sandbox and permissions, the data it can
@@ -165,6 +168,13 @@ make it smaller or larger?” when a sizing decision is needed.
   its coordination, the `Ask first` entries it may grant, and how it reads and
   messages the goal session. Recommend supervision for every loop; omit it
   only when the user declines.
+- **Workspaces:** Give each worktree one writer at a time. The goal session
+  owns a fresh worktree created from the remote and bound as its working
+  directory, never the main checkout. The supervisor runs in a folder without
+  code, such as the contract's folder, and reads the goal worktree without
+  writing to it. Workers follow Coordination. Name every gitignored file in
+  the goal worktree that another session must write, such as a local env
+  file, and the one session that writes it.
 - **Lead model:** Select the model for the execution harness's coordinating
   session, the coordination concern's row, independently of the model
   authoring the goal. A goal cannot change
@@ -230,6 +240,8 @@ Supervisor: <session reference once started; harness, model, and effort; its
   approach and per-concern rows; how it reads and messages the goal session>
 Lead model: <model the coordinating session must run, and its harness's model
   selection command when a change is needed there>
+Workspaces: <goal worktree path and branch; the supervisor's folder; any
+  gitignored file in the goal worktree another session writes, and who>
 Constraints: <task-specific invariants and exclusions>
 Human checkpoints: <required decisions, inputs, or actions and when needed>
 Validate: <commands and other evidence required for progress and completion>
@@ -298,3 +310,28 @@ command after a blocker is resolved, give the user that exact command together
 with the approval question. A conversational answer does not automatically
 reactivate a blocked goal unless the runtime implements that behavior. Provider
 limits and aborted turns can stop pursuit regardless of task permissions.
+
+### Scheduled start
+
+A scheduled start posts the loop's first goal message once, at the agreed
+time, in the thread that runs it. Create every session it needs now, with its
+harness, model, and effort, without starting a goal; the scheduled run only
+posts the message. Use the harness's scheduler. In T3 Code, bind the task to
+that thread, the supervisor's when the loop has one. `schedule_task` binds only
+to the thread that calls it, so that thread creates its own task:
+
+1. Send it one setup message through `t3_thread_send`: call `schedule_task`
+   with `bindToCurrentThread: true`, `schedule: {type: "once", runAt: "<ISO
+   8601 timestamp with UTC offset>"}`, and its start message, such as
+   `/goal <text>`, as the `prompt`; start no goal or other work now; reply with
+   the returned `scheduledTaskId`, `boundThreadId`, and `nextRunAt`. This turn
+   also shows the session can load and call T3 tools before the start.
+2. Confirm with `list_scheduled_tasks` for that thread's project that
+   `boundThreadId` is that thread, `nextRunAt` is the intended moment, and
+   `prompt` is the full start message. Read the IDs from the listing: a masked
+   harness can show them as placeholders in the reply.
+3. Tell the user, and record the task ID in the contract so the start can be
+   cancelled with `delete_scheduled_task`.
+
+After it fires, T3 keeps the task listed with `nextRunAt` null and
+`lastRunStatus` `succeeded`; it does not run again.

@@ -40,18 +40,22 @@ This session starts only the supervisor; the supervisor starts the goal loop,
 so it is watching from the loop's first turn.
 
 1. **Create the goal session** with the harness, model, and effort the
-   contract names, without starting its goal. Use this authoring session
-   instead only when it holds state the contract cannot carry, such as a login
-   made inside it.
+   contract names, bound to the worktree its `Workspaces` field names, without
+   starting its goal. Use this authoring session instead only when it holds
+   state the contract cannot carry, such as a login made inside it.
 2. **Start the supervisor** with the harness, model, and effort its
-   `Supervisor` field names, and its goal as the first message through that
-   harness's goal start, such as `/goal <supervisor goal text>` for Claude
-   Code. Use a tool that starts a session there, such as `t3_thread_launch`.
-   When no tool here can start it, give the user the exact launch command and
-   goal text to run in a new session.
-3. **Confirm** the supervisor's goal is active. Record its session reference in
-   the `Supervisor` field. When this session is the goal session, end this
-   turn; the supervisor sets the goal here once the turn ends.
+   `Supervisor` field names, in the folder `Workspaces` names, and its goal as
+   the first message through that harness's goal start, such as
+   `/goal <supervisor goal text>` for Claude Code. Use a tool that starts a
+   session there, such as `t3_thread_launch`. When no tool here can start it,
+   give the user the exact launch command and goal text to run in a new
+   session. For a later start time, create the supervisor session without its
+   goal, and schedule that goal message (see Scheduled start in
+   [`SKILL.md`](SKILL.md#scheduled-start)).
+3. **Confirm** the supervisor's goal is active, or the scheduled start's run
+   time. Record its session reference in the `Supervisor` field. When this
+   session is the goal session, end this turn; the supervisor sets the goal
+   here once the turn ends.
 
 ## Updates
 

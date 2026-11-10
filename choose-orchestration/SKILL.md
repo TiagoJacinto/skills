@@ -17,11 +17,15 @@ Use the request and available context to answer these questions. Ask the user on
 4. **Complex plan or hard-to-test result?** Use a coordinator one or two capability tiers above the smallest model. If evaluating success itself requires expert judgment, assign that evaluation to a strong model.
 5. **Otherwise, clear steps with observable outcomes?** A small coordinator can handle dispatch, bookkeeping, and light QA; strong workers own work requiring judgment.
 
+Coordinate with a model smaller than the current one unless question 1 or 4 calls for a strong coordinator.
+
 For design, assign the actual design work to the model whose taste the user wants. Save tokens by moving logistics off its plate. A coordinator's detailed aesthetic instructions cannot substitute for the designer's judgment.
 
 ## Make the choice concrete
 
-Give a short recommendation naming who plans, coordinates, implements, and evaluates, with the reason for the split. One model may fill several roles. Separate the model choice from effort: low effort can suit a rough creative take; more demanding planning, execution, or verification may warrant more effort without changing whose taste is wanted.
+Give a short recommendation naming who plans, coordinates, implements, and evaluates, with the reason for the split. One model may fill several roles. Separate the model choice from effort. Deep work (research, investigation, demanding planning or verification) gets high effort, up to xhigh. Shallow work that exercises taste, such as a rough creative take, goes to the biggest model at low effort: bigger models have better taste, and low effort keeps the cost down.
+
+Settle what runs in parallel. A worker that writes while another session writes the same repo, or needs its own branch, gets its own worktree; other workers share the worktree of the session that started them, one writer at a time.
 
 When naming models for a run, discover the host's available models and supported effort settings. Use the user's preferences and task evidence to assign roles. Report an unavailable requested model rather than silently substituting another. This skill chooses a configuration; the host's orchestration instructions own dispatch mechanics.
 

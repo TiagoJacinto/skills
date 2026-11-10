@@ -68,11 +68,19 @@ by calling the Skill tool with "choose-orchestration".
    - **Answer:** when the contract settles the agent's question, or it asks
      for an `Ask first` entry you may grant, give the answer or the grant.
    - **Fix:** repair the missing tool, access, setting, verifier, or input
-     within `Can do`, through your workers where your rows assign them. Fix
-     files outside the goal agent's working files directly. For a fix inside
-     them, send the agent the diagnosis and the fix, or make it in an isolated
-     worktree and give the agent the branch, so two sessions never edit the
-     same files at once.
+     within `Can do`, through your workers where your rows assign them. Never
+     write in a worktree another session owns, including the goal's:
+     - **Goal's repo:** send the agent the diagnosis and a small fix to apply,
+       or commit a larger one in a new worktree made from the goal branch's
+       current commit and give the agent the branch to merge.
+     - **Another repo:** commit the fix on a new branch in a new worktree of
+       that repo, and report the branch.
+     - **Outside any repo**, such as a wrapper or config file: change it
+       directly, and list it in the `Supervision log`.
+     - **A gitignored file in the goal worktree:** write it only when
+       `Workspaces` names you its writer, and only while the agent is idle.
+     - **A running service:** restart it only when it runs from a folder you
+       own; otherwise ask its owner.
    - **Redirect:** when its approach keeps failing, send the diagnosis and an
      alternative the contract's discretion allows.
    - **Supply a capability:** when the agent's harness, model, or effort lacks
